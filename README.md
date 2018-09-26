@@ -58,4 +58,3 @@ Basically, I use gunicorn and nginx to start a web server on Google Compute Engi
 ## TODO
 
 - Dockerize
-- Continuous Integration
