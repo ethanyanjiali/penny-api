@@ -1,6 +1,4 @@
-# Penny Backend Service
-
-## About Penny
+# Penny API [![CircleCI](https://circleci.com/gh/ethanyanjiali/penny-api/tree/master.svg?style=svg)](https://circleci.com/gh/ethanyanjiali/penny-api/tree/master)
 
 Penny (http://mypenny.co) is a free tool to help people split complicated group expenses with their friends. The service is launched in 2016 and 
 getting more and more popular nowadays because it's so easy to use. Not like other group expense tool, Penny doesn't
@@ -12,7 +10,7 @@ on Google Cloud.
 
 ## Devlopement
 
-0. Make sure Python 3+ is installed
+1. Make sure Python 3+ is installed
 0. Setup virtualenv
     ```bash
     python3 -m venv env
@@ -40,7 +38,7 @@ The deployment follows this article
 
 Basically, I use gunicorn and nginx to start a web server on Google Compute Engine
 
-0. Log onto the instance (there's only one)
+1. Log onto the instance (there's only one)
 0. Pull master
 0. Stop previous service 
     ```bash
