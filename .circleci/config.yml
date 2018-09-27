@@ -27,12 +27,12 @@ jobs:
           name: Store Service Account
           command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
       - run: |
-          sudo gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
-          sudo gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-          sudo gcloud auth configure-docker
+          su gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+          su gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+          su gcloud auth configure-docker
       - run: |
           mkdir instance
-          sudo gsutil cp gs://mypenny-config/flask.cfg instance/flask.cfg
+          su gsutil cp gs://mypenny-config/flask.cfg instance/flask.cfg
 
       # build and push Docker image
       - run: |
