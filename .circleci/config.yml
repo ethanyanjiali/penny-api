@@ -29,7 +29,6 @@ jobs:
       - run: |
           sudo gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
           sudo gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-          sudo gcloud auth configure-docker
       - run: |
           mkdir instance
           sudo gsutil cp gs://mypenny-config/flask.cfg instance/flask.cfg
@@ -38,4 +37,5 @@ jobs:
       - run: |
           TAG=$(git log -1 --pretty=%h)
           docker build -t gcr.io/${GOOGLE_PROJECT_ID}/penny-api:$TAG .
+          docker login -u _json_key -p "$GCLOUD_SERVICE_KEY" https://gcr.io
           docker push gcr.io/${GOOGLE_PROJECT_ID}/penny-api:$TAG
