@@ -39,3 +39,5 @@ jobs:
           docker build -t gcr.io/${GOOGLE_PROJECT_ID}/penny-api:$TAG .
           docker login -u _json_key -p "$GCLOUD_SERVICE_KEY" https://gcr.io
           docker push gcr.io/${GOOGLE_PROJECT_ID}/penny-api:$TAG
+
+      - run: gcloud compute instances update-container api-instance-2 --container-image gcr.io/${GOOGLE_PROJECT_ID}/penny-api:$TAG
