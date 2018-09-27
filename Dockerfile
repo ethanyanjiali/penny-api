@@ -14,4 +14,4 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt
 EXPOSE 80
 
 # Start gunicorn
-CMD [ "gunicorn", "-b", "0.0.0.0:8000", "-w", "2", "main:app"]
+CMD [ "gunicorn", "-b", "0.0.0.0:80", "-w", "2", "--env", "FLASK_ENV=production", "main:app"]

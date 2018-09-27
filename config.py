@@ -13,10 +13,12 @@ class ProductionConfig(BaseConfig):
     DEBUG = False
     TESTING = False
     NAMESPACE = 'prod'
+    PORT = 80
 
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
     TESTING = True
     NAMESPACE = 'dev'
+    PORT = 8000
 

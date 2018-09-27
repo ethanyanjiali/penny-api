@@ -35,8 +35,17 @@ on Google Cloud.
 ## Deployment
 
 This project use Circle CI to build and publish the docker image, and then update the Google Compute
-Engine with the new container image. In order to deploy manually:
+Engine with the new container image. 
 
+I built a custom image which contains both gcloud-sdk and python3.7 here
+```
+https://hub.docker.com/r/liyanjia92/gcloudpython/
+```
+Circle CI will pull this image, authenticate through gcloud with the JSON key of the service account, then 
+download the instance config for the app. Next, docker will build a new image for the project, login with GCP JSON 
+key, then push to gcr.io (Google Container Registry) 
+
+If you need to deploy manually
 1. Make sure Docker is installed
 0. Make sure `gcloud` is also installed
 0. Build the image
@@ -48,9 +57,9 @@ Engine with the new container image. In order to deploy manually:
     docker run -p 80:8000 penny-api:$(git log -1 --pretty=%h)
     ```
 0. GET `http://localhost/common/lang` to ensure the container runs correctly
-0. Push the image to Docker Hub
+0. Push the image to gcr.io
     ```bash
-    docker push liyanjia92/penny-api:$(git log -1 --pretty=%h)
+    docker push gci.io/mypennyco/penny-api:$(git log -1 --pretty=%h)
     ```
 
 Basically, I use gunicorn and nginx to start a web server on Google Compute Engine
