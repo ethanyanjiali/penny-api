@@ -6,7 +6,7 @@ require sign up or login. You just need to share the URL to your friends, then e
 from their own device. In the meantime, the settlement will be calculated automatically to guide you how to pay out.
 
 In order to make it not only free for users, but also for developers, I've open sourced this project in 2018. This backend service is running 
-on Google Cloud.
+on Google Cloud. Domain name is managed by Godaddy, DNS and CDN is on Cloudflare. 
 
 ## Devlopement
 

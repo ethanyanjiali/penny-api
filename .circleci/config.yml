@@ -23,12 +23,14 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
 
+      # Authorize gcloud
       - run:
           name: Store Service Account
           command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
       - run: |
           sudo gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
           sudo gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+      # Copy over the instance config for flask
       - run: |
           mkdir instance
           sudo gsutil cp gs://mypenny-config/flask.cfg instance/flask.cfg
@@ -40,7 +42,7 @@ jobs:
           docker login -u _json_key -p "$GCLOUD_SERVICE_KEY" https://gcr.io
           docker push gcr.io/${GOOGLE_PROJECT_ID}/penny-api:$TAG
           sudo gcloud compute instances update-container api-instance-docker --container-image gcr.io/${GOOGLE_PROJECT_ID}/penny-api:$TAG
-
+      # Delete the oldest image after deploying new image
       - run: |
           DELETE_DIGEST=$(sudo gcloud container images list-tags gcr.io/mypennyco/penny-api --sort-by=timestamp --limit=1 --format='get(digest)')
           DELETE_TAGS=$(sudo gcloud container images list-tags gcr.io/mypennyco/penny-api --sort-by=timestamp --limit=1 --format='get(tags)')
