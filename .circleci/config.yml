@@ -9,6 +9,7 @@ jobs:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.7.0-browsers`
       - image: circleci/python:3.7.0
+      - image: google/cloud-sdk
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -23,9 +24,19 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
 
+      - run:
+          name: Store Service Account
+          command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
+      - run: |
+          sudo gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+          sudo gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+          sudo gcloud auth configure-docker
+      - run: |
+          mkdir instance
+          sudo gsutil cp gs://mypenny-config/flask.cfg instance/flask.cfg
+
       # build and push Docker image
       - run: |
           TAG=$(git log -1 --pretty=%h)
-          docker build -t liyanjia92/penny-api:$TAG .
-          docker login -u $DOCKER_USER -p $DOCKER_PASS
-          docker push liyanjia92/penny-api:$TAG
+          docker build -t gcr.io/${GOOGLE_PROJECT_ID}/penny-api:$TAG .
+          docker push gcr.io/${GOOGLE_PROJECT_ID}/penny-api:$TAG

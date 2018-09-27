@@ -10,7 +10,7 @@ on Google Cloud.
 
 ## Devlopement
 
-1. Make sure Python 3+ is installed
+1. Make sure Python 3.7.0 is installed
 0. Setup virtualenv
     ```bash
     python3 -m venv env
@@ -38,6 +38,7 @@ This project use Circle CI to build and publish the docker image, and then updat
 Engine with the new container image. In order to deploy manually:
 
 1. Make sure Docker is installed
+0. Make sure `gcloud` is also installed
 0. Build the image
     ```bash
     docker build -t penny-api:$(git log -1 --pretty=%h) .
