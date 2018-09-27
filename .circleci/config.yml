@@ -26,6 +26,6 @@ jobs:
       # build and push Docker image
       - run: |
           TAG=$(git log -1 --pretty=%h)
-          docker build -t liyanjia92/circleci-demo-docker:$TAG .
+          docker build -t liyanjia92/penny-api:$TAG .
           docker login -u $DOCKER_USER -p $DOCKER_PASS
-          docker push liyanjia92/circleci-demo-docker:$TAG
+          docker push liyanjia92/penny-api:$TAG

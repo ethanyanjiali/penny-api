@@ -31,10 +31,26 @@ on Google Cloud.
     ```bash
     deactivate
     ```
+
 ## Deployment
 
-The deployment follows this article
-```https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-16-04```
+This project use Circle CI to build and publish the docker image, and then update the Google Compute
+Engine with the new container image. In order to deploy manually:
+
+1. Make sure Docker is installed
+0. Build the image
+    ```bash
+    docker build -t penny-api:$(git log -1 --pretty=%h) .
+    ```
+0. Run a container with this image for testing
+    ```bash
+    docker run -p 80:8000 penny-api:$(git log -1 --pretty=%h)
+    ```
+0. GET `http://localhost/common/lang` to ensure the container runs correctly
+0. Push the image to Docker Hub
+    ```bash
+    docker push liyanjia92/penny-api:$(git log -1 --pretty=%h)
+    ```
 
 Basically, I use gunicorn and nginx to start a web server on Google Compute Engine
 
