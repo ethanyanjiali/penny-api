@@ -28,4 +28,4 @@ jobs:
           TAG=$(git log -1 --pretty=%h)
           docker build -t liyanjia92/circleci-demo-docker:$TAG .
           docker login -u $DOCKER_USER -p $DOCKER_PASS
-          docker push CircleCI-Public/circleci-demo-docker:$TAG
+          docker push liyanjia92/circleci-demo-docker:$TAG
