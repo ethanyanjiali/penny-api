@@ -7,8 +7,8 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      # cloud-sdk image installed python 3
-      - image: google/cloud-sdk
+      # my custom docker image that has both python 3.7 and gcloud 218
+      - image: liyanjia92/gcloudpython:g218-p370
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -27,12 +27,12 @@ jobs:
           name: Store Service Account
           command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
       - run: |
-          su gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
-          su gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-          su gcloud auth configure-docker
+          sudo gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+          sudo gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+          sudo gcloud auth configure-docker
       - run: |
           mkdir instance
-          su gsutil cp gs://mypenny-config/flask.cfg instance/flask.cfg
+          sudo gsutil cp gs://mypenny-config/flask.cfg instance/flask.cfg
 
       # build and push Docker image
       - run: |
