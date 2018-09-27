@@ -41,8 +41,8 @@ jobs:
           docker push gcr.io/${GOOGLE_PROJECT_ID}/penny-api:$TAG
 
       - run: |
-          sudo gcloud compute instances update-container api-instance-2 --container-image gcr.io/${GOOGLE_PROJECT_ID}/penny-api:$TAG
-          DELETE_DIGEST=$(gcloud container images list-tags gcr.io/mypennyco/penny-api --sort-by=~timestamp --limit=1 --format='get(digest)')
-          DELETE_TAGS=$(gcloud container images list-tags gcr.io/mypennyco/penny-api --sort-by=~timestamp --limit=1 --format='get(tags)')
+          sudo gcloud compute instances update-container api-instance-docker --container-image gcr.io/${GOOGLE_PROJECT_ID}/penny-api:$TAG
+          DELETE_DIGEST=$(sudo gcloud container images list-tags gcr.io/mypennyco/penny-api --sort-by=~timestamp --limit=1 --format='get(digest)')
+          DELETE_TAGS=$(sudo gcloud container images list-tags gcr.io/mypennyco/penny-api --sort-by=~timestamp --limit=1 --format='get(tags)')
           echo $DELETE_TAGS
           echo $DELETE_DIGEST
