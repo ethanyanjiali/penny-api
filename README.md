@@ -6,7 +6,7 @@ require sign up or login. You just need to share the URL to your friends, then e
 from their own device. In the meantime, the settlement will be calculated automatically to guide you how to pay out.
 
 In order to make it not only free for users, but also for developers, I've open sourced this project in 2018. This backend service is running 
-on Google Cloud. Domain name is managed by Godaddy, DNS and CDN is on Cloudflare. 
+on Google Compute Engine. DNS is managed by AWS Route 53, where the CNAME `http://api.mypenny.co` is defined.
 
 ## Devlopement
 
@@ -45,7 +45,7 @@ Circle CI will pull this image, authenticate through gcloud with the JSON key of
 download the instance config for the app. Next, docker will build a new image for the project, login with GCP JSON 
 key, then push to gcr.io (Google Container Registry) 
 
-If you need to deploy manually
+If you need to deploy manually:
 1. Make sure Docker is installed
 0. Make sure `gcloud` is also installed
 0. Build the image
@@ -62,19 +62,7 @@ If you need to deploy manually
     docker push gci.io/mypennyco/penny-api:$(git log -1 --pretty=%h)
     ```
 
-Basically, I use gunicorn and nginx to start a web server on Google Compute Engine
+## TODOS
 
-1. Log onto the instance (there's only one)
-0. Pull master
-0. Stop previous service 
-    ```bash
-    ./scripts/stop.sh
-    ```
-0. Start the new service again
-    ```bash
-    ./scripts/start.sh
-    ```
-0. If you need to restart Nginx
-    ```bash
-    sudo service nginx restart
-    ```
+1. Refactor the validation logic for event/expense
+2. Add unit tests
