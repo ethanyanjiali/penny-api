@@ -32,12 +32,18 @@ jobs:
           mkdir instance
           sudo gsutil cp gs://mypenny-config/flask.cfg instance/flask.cfg
 
-      # build and push Docker image
+      # build Docker image
       - run: |
           TAG=$(git log -1 --pretty=%h)
           docker build -t gcr.io/${GOOGLE_PROJECT_ID}/penny-api:$TAG .
+      # publish Docker image
+      - run: |
+          TAG=$(git log -1 --pretty=%h)
           docker login -u _json_key -p "$GCLOUD_SERVICE_KEY" https://gcr.io
           docker push gcr.io/${GOOGLE_PROJECT_ID}/penny-api:$TAG
+      # deploy Docker image
+      - run: |
+          TAG=$(git log -1 --pretty=%h)
           sudo gcloud compute instances update-container api-instance-docker --container-image gcr.io/${GOOGLE_PROJECT_ID}/penny-api:$TAG
       # Delete the oldest image after deploying new image
       - run: |
