@@ -19,6 +19,8 @@ jobs:
 
     steps:
       - checkout
+      # https://circleci.com/docs/2.0/building-docker-images/
+      - setup_remote_docker
 
       # Authorize gcloud
       - run:
